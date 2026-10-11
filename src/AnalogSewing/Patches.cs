@@ -57,7 +57,9 @@ namespace AnalogSewing
             {
                 _frame = Time.frameCount;
                 var start = Plugin.StartDepthMm.Value;
-                if (!live) _holding = false;
+                // The SDK sees the keyboard even when another window has focus (e.g. typing in Discord
+                // after alt-tab), unlike the game's own input, so ignore the key while unfocused.
+                if (!live || !Application.isFocused) _holding = false;
                 else if (!_holding && depthMm >= start) _holding = true;
                 else if (_holding && depthMm < Mathf.Max(0.05f, start - ReleaseHysteresisMm)) _holding = false;
             }
