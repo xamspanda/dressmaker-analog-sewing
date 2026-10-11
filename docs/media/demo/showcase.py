@@ -28,11 +28,11 @@ HIDE_FPS = "delogo=x=926:y=1058:w=68:h=20"  # FPS counter in the 2026-10-10 reco
 # (start s, end s, caption) in the source recording
 CLIPS = [
     (157.4, 164.6, "Press lightly for slow, careful curves"),
-    (14.0, 20.1, "Press harder to speed up"),
-    (180.6, 186.0, "Full press, full speed"),
+    (14.0, 19.95, "Press harder to speed up"),
+    (180.6, 185.45, "Full press, full speed"),
     (173.2, 178.7, "Ease off whenever you need to"),
     (207.0, 214.5, "Take every curve at your own pace"),
-    (243.4, 247.5, None),  # the finished dress
+    (242.9, 246.2, None),  # the finished dress (OBS appears at 246.5)
 ]
 TITLE_S, END_S = 3.5, 4.5
 
@@ -84,6 +84,15 @@ def caption_png(text, path):
         d.rounded_rectangle([x, sy, x + 18 * ss, sy + 5 * ss], radius=3 * ss, fill=ROSE)
         x += 30 * ss
     img.resize((W, H), Image.LANCZOS).save(path)
+
+
+def cuts_within(src, start, end):
+    """Times of camera cuts inside [start, end] of the source, via ffmpeg scene detection."""
+    out = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-nostats", "-ss", f"{start}", "-t", f"{end - start}", "-i", src, "-an",
+         "-vf", "fps=30,scale=480:-1,select='gt(scene,0.25)',showinfo", "-f", "null", "-"],
+        capture_output=True, text=True).stderr
+    return [start + float(part.split()[0]) for part in out.split("pts_time:")[1:]]
 
 
 def run(cmd):
@@ -140,6 +149,11 @@ def main():
     p.add_argument("--output", default=os.path.join(HERE, "out", "analog-sewing-showcase.mp4"))
     args = p.parse_args()
     os.makedirs(os.path.dirname(args.output), exist_ok=True)
+
+    # A cut inside a clip shows up as a flash of another scene, worse when crossfaded.
+    bad = [(start, end, t) for start, end, _ in CLIPS for t in cuts_within(args.video, start, end)]
+    if bad:
+        sys.exit("Camera cuts inside clips; adjust CLIPS:\n" + "\n".join(f"  {s}-{e}: cut at {t:.2f}" for s, e, t in bad))
 
     with tempfile.TemporaryDirectory() as tmp:
         parts, durs = [], []
