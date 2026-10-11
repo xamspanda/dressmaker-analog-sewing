@@ -2,6 +2,9 @@
 """Cut a short showcase video from a gauge recording: title card, captioned clips, end card.
 
     python3 docs/media/demo/showcase.py --video "<recording> (gauge).mp4"
+    python3 docs/media/demo/showcase.py --video "..." --no-title --output out/twitter.mp4
+
+--no-title starts straight on gameplay (no title card or fade-in), for social feeds.
 
 The clip list (CLIPS) is hand-picked for the 2026-10-10 recording using its depth log; edit
 the times for a new recording. Captions sit bottom-left, above the game's control hints and opposite the key gauge. Uses only the
@@ -57,8 +60,9 @@ def end_card():
   <text x="960" y="480" text-anchor="middle" class="sub" style="font-size:42px;fill:{mm.CREAM}">Your keyboard is the foot pedal.</text>
   {mm.stitches(660, 560, 1260, 560, dash=(18, 12), width=6)}
   <text x="960" y="660" text-anchor="middle" class="body" style="font-size:40px">Free on Nexus Mods</text>
-  <text x="960" y="720" text-anchor="middle" class="sub" style="font-size:30px">Requires BepInEx 5 and a Wooting analog keyboard</text>
-  <text x="960" y="800" text-anchor="middle" class="mono" style="font-size:28px;fill:{mm.MUSTARD}">github.com/xamspanda/dressmaker-analog-sewing</text>
+  <text x="960" y="718" text-anchor="middle" class="mono" style="font-size:32px;fill:{mm.MUSTARD}">nexusmods.com/dressmaker/mods/516</text>
+  <text x="960" y="808" text-anchor="middle" class="sub" style="font-size:28px">Requires BepInEx 5 and a Wooting analog keyboard</text>
+  <text x="960" y="862" text-anchor="middle" class="mono" style="font-size:24px;fill:{mm.MUTED}">github.com/xamspanda/dressmaker-analog-sewing</text>
 """
     return mm.svg(W, H, body)
 
@@ -125,7 +129,7 @@ def still(png, dur, out):
          "-vf", f"fps={FPS},scale={W}:{H},format=yuv420p", "-map", "0:v", "-map", "1:a", *ENC, out])
 
 
-def join(parts, durations, out):
+def join(parts, durations, out, fade_in=True):
     """Crossfade all parts together (video and audio)."""
     inputs = sum((["-i", p] for p in parts), [])
     fv, fa, offset = [], [], 0.0
@@ -137,7 +141,8 @@ def join(parts, durations, out):
         v, a = f"[v{i}]", f"[a{i}]"
     last = len(parts) - 1
     total = sum(durations) - FADE * last
-    graph = ";".join(fv + fa) + f";{v}fade=t=in:st=0:d=0.6,fade=t=out:st={total - 0.8:.3f}:d=0.8[vout]"
+    fades = (["fade=t=in:st=0:d=0.6"] if fade_in else []) + [f"fade=t=out:st={total - 0.8:.3f}:d=0.8"]
+    graph = ";".join(fv + fa) + f";{v}{','.join(fades)}[vout]"
     run(["ffmpeg", "-v", "error", "-y", *inputs, "-filter_complex", graph,
          "-map", "[vout]", "-map", a, *ENC, "-movflags", "+faststart", out])
     return total
@@ -147,6 +152,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--video", required=True, help="the '(gauge).mp4' recording")
     p.add_argument("--output", default=os.path.join(HERE, "out", "analog-sewing-showcase.mp4"))
+    p.add_argument("--no-title", action="store_true", help="start straight on gameplay: no title card or fade-in")
     args = p.parse_args()
     os.makedirs(os.path.dirname(args.output), exist_ok=True)
 
@@ -163,8 +169,9 @@ def main():
                 f.write(make())
             mm.render(pathlib_path(svg_path), os.path.join(tmp, f"{name}.png"), W, H)
 
-        still(os.path.join(tmp, "title.png"), TITLE_S, os.path.join(tmp, "00-title.mp4"))
-        parts.append(os.path.join(tmp, "00-title.mp4")); durs.append(TITLE_S)
+        if not args.no_title:
+            still(os.path.join(tmp, "title.png"), TITLE_S, os.path.join(tmp, "00-title.mp4"))
+            parts.append(os.path.join(tmp, "00-title.mp4")); durs.append(TITLE_S)
         for i, (start, end, caption) in enumerate(CLIPS, 1):
             out = os.path.join(tmp, f"{i:02d}-clip.mp4")
             print(f"Clip {i}/{len(CLIPS)}: {caption or 'finished dress'}", file=sys.stderr)
@@ -173,7 +180,7 @@ def main():
         still(os.path.join(tmp, "end.png"), END_S, os.path.join(tmp, "99-end.mp4"))
         parts.append(os.path.join(tmp, "99-end.mp4")); durs.append(END_S)
 
-        total = join(parts, durs, args.output)
+        total = join(parts, durs, args.output, fade_in=not args.no_title)
     print(f"Wrote {args.output} ({total:.1f}s)", file=sys.stderr)
 
 
