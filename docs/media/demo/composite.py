@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Burn a key-depth gauge into the corner of a clip made by record.py.
+"""Burn a key-depth gauge into the corner of a recording, using a depth log from obs_record.py.
 
-    python3 docs/media/demo/composite.py [--offset 0.0] [--preview]
+    python3 docs/media/demo/composite.py --video rec.mkv --log depth.csv [--output out.mp4]
+    python3 docs/media/demo/composite.py --preview
 
-Reads <out>/raw.mp4 and <out>/depth.csv and writes <out>/analog-sewing-demo.mp4.
+obs_record.py runs this automatically when a recording stops.
 The gauge shows the keycap sinking, the depth in mm and the machine speed, computed with the
 mod's settings from the game's BepInEx config (or the defaults). If the gauge looks early or
 late against the in-game speed slider, nudge --offset (seconds; positive = gauge later). By
@@ -12,6 +13,7 @@ default it corrects for the recorder's startup delay, assuming the video and log
 import argparse
 import bisect
 import configparser
+import json
 import os
 import subprocess
 import sys
@@ -105,20 +107,22 @@ class Gauge:
     W, H = 560, 250
     SS = 2  # supersampling for smooth edges
 
-    def __init__(self, settings):
+    def __init__(self, settings, scale=1.0):
         self.s = settings
-        k = self.SS
-        self.f_label = font(19 * k, 800)
-        self.f_big = font(52 * k, 800)
-        self.f_val = font(30 * k, 800)
+        self.W, self.H = round(Gauge.W * scale), round(Gauge.H * scale)
+        k = self.SS * scale
+        self.k = k
+        self.f_label = font(round(19 * k), 800)
+        self.f_big = font(round(52 * k), 800)
+        self.f_val = font(round(30 * k), 800)
 
     def frame(self, depth01):
-        k = self.SS
+        k = self.k
         mm = depth01 * self.s["KeyTravelMm"]
         pct = speed_pct(mm, self.s)
-        img = Image.new("RGBA", (self.W * k, self.H * k), (0, 0, 0, 0))
+        img = Image.new("RGBA", (self.W * self.SS, self.H * self.SS), (0, 0, 0, 0))
         d = ImageDraw.Draw(img)
-        d.rounded_rectangle([0, 0, self.W * k - 1, self.H * k - 1], radius=26 * k, fill=PANEL, outline=BORDER, width=2 * k)
+        d.rounded_rectangle([0, 0, img.width - 1, img.height - 1], radius=26 * k, fill=PANEL, outline=BORDER, width=max(1, round(2 * k)))
 
         draw_switch(d, 140 * k, 28 * k, depth01 * 40, 0.92 * k)
 
@@ -146,44 +150,52 @@ def load_depth(path):
     return ts, ds
 
 
-def duration(path):
-    out = subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path])
-    return float(out)
+def probe(path):
+    """(width, height, duration in seconds) of a video file."""
+    out = json.loads(subprocess.check_output([
+        "ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height:format=duration",
+        "-of", "json", path]))
+    return out["streams"][0]["width"], out["streams"][0]["height"], float(out["format"]["duration"])
 
 
 def main():
     default_cfg = os.path.expanduser("~/Downloads/Dressmaker/game/BepInEx/config/xamspanda.dressmaker.analogsewing.cfg")
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--out", default=os.path.join(HERE, "out"))
+    p.add_argument("--video", help="recording to add the gauge to")
+    p.add_argument("--log", help="depth CSV from obs_record.py")
+    p.add_argument("--output", help="output file (default: '<video> (gauge).mp4')")
     p.add_argument("--offset", type=float, help="shift the gauge in time (seconds; default: auto)")
     p.add_argument("--config", default=default_cfg, help="mod .cfg to take speed settings from")
-    p.add_argument("--margin", type=int, default=40)
-    p.add_argument("--preview", action="store_true", help="only render a PNG of the first frame with the key down")
+    p.add_argument("--margin", type=int, default=40, help="gap from the corner at 1080p (scaled with the video)")
+    p.add_argument("--preview", action="store_true", help="only render a PNG of the gauge with the key half down")
     args = p.parse_args()
 
-    gauge = Gauge(load_settings(args.config))
+    settings = load_settings(args.config)
     if args.preview:
-        path = os.path.join(args.out, "gauge-preview.png")
-        os.makedirs(args.out, exist_ok=True)
-        gauge.frame(0.55).save(path)
+        path = os.path.join(HERE, "out", "gauge-preview.png")
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        Gauge(settings).frame(0.55).save(path)
         print(path)
         return
+    if not (args.video and args.log):
+        p.error("--video and --log are required")
 
-    raw, log = os.path.join(args.out, "raw.mp4"), os.path.join(args.out, "depth.csv")
-    ts, ds = load_depth(log)
-    video_s = duration(raw)
+    ts, ds = load_depth(args.log)
+    width, height, video_s = probe(args.video)
+    scale = height / 1080
+    gauge = Gauge(settings, scale)
     frames = round(video_s * FPS)
-    # The recorder starts a little after the log does, and both stop together.
+    # The log starts when OBS reports the recording started and stops when it reports it stopped.
     offset = args.offset if args.offset is not None else -max(0.0, ts[-1] - video_s)
     print(f"Gauge offset {offset:+.3f}s", file=sys.stderr)
-    dst = os.path.join(args.out, "analog-sewing-demo.mp4")
-    m = args.margin
+    dst = args.output or os.path.splitext(args.video)[0] + " (gauge).mp4"
+    m = round(args.margin * scale)
     ff = subprocess.Popen([
-        "ffmpeg", "-y", "-v", "error", "-i", raw,
-        "-f", "rawvideo", "-pix_fmt", "rgba", "-s", f"{Gauge.W}x{Gauge.H}", "-framerate", str(FPS), "-i", "-",
+        "ffmpeg", "-y", "-v", "error", "-i", args.video,
+        "-f", "rawvideo", "-pix_fmt", "rgba", "-s", f"{gauge.W}x{gauge.H}", "-framerate", str(FPS), "-i", "-",
         "-filter_complex", f"[0:v][1:v]overlay=x=W-w-{m}:y=H-h-{m}:eof_action=pass[v]",
         "-map", "[v]", "-map", "0:a?", "-c:v", "libx264", "-crf", "18", "-preset", "medium",
-        "-pix_fmt", "yuv420p", "-c:a", "copy", "-movflags", "+faststart", dst,
+        "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", dst,
     ], stdin=subprocess.PIPE)
 
     cache = {}
