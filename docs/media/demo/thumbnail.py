@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-"""Make the YouTube thumbnail (1280x720) from a full-speed frame of the gauge recording.
+"""Make the YouTube thumbnail and Nexus cover image from a full-speed frame of the gauge recording.
 
     python3 docs/media/demo/thumbnail.py --video "<recording> (gauge).mp4" [--at 175.0]
+
+Writes out/youtube-thumbnail.png (1280x720) and docs/media/0-cover.png (1920x1080, the Nexus
+gallery's first image, which Nexus uses as the mod's tile).
 """
 import argparse
 import os
@@ -41,22 +44,29 @@ def card(frame_uri):
     return mm.svg(W, H, body).replace('<rect width="1280" height="720" fill="url(#weave)"/>', "", 1)
 
 
+OUTPUTS = [
+    (os.path.join(HERE, "out", "youtube-thumbnail.png"), 1280, 720),
+    (os.path.join(HERE, "..", "0-cover.png"), 1920, 1080),
+]
+
+
 def main():
-    p = argparse.ArgumentParser(description=__doc__)
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--video", required=True)
     p.add_argument("--at", type=float, default=175.0, help="source time of the frame (seconds)")
-    p.add_argument("--output", default=os.path.join(HERE, "out", "youtube-thumbnail.png"))
     args = p.parse_args()
-    os.makedirs(os.path.dirname(args.output), exist_ok=True)
 
     with tempfile.TemporaryDirectory() as tmp:
         frame = pathlib.Path(tmp, "frame.png")
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{args.at}", "-i", args.video, "-frames:v", "1",
-                        "-vf", f"{CLEANUP},scale={W}:{H}:flags=lanczos", str(frame)], check=True)
-        svg = pathlib.Path(tmp, "thumb.svg")
-        svg.write_text(card(frame.as_uri()))
-        mm.render(svg, args.output, W, H)
-    print(args.output)
+                        "-vf", CLEANUP, str(frame)], check=True)
+        for out, w, h in OUTPUTS:
+            os.makedirs(os.path.dirname(out), exist_ok=True)
+            # Same 1280x720 layout, rendered at the output size via the SVG's viewBox.
+            svg = pathlib.Path(tmp, "thumb.svg")
+            svg.write_text(card(frame.as_uri()).replace(f'width="{W}" height="{H}" viewBox', f'width="{w}" height="{h}" viewBox', 1))
+            mm.render(svg, out, w, h)
+            print(os.path.normpath(out))
 
 
 if __name__ == "__main__":
