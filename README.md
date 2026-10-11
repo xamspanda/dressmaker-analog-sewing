@@ -5,6 +5,8 @@
 Use a Wooting (or other Hall-effect analog) keyboard like a sewing machine foot pedal:
 press the sew key lightly to sew slowly, press harder to sew faster.
 
+**[Download on Nexus Mods](https://www.nexusmods.com/dressmaker/mods/516)** · **[Watch the showcase](https://www.youtube.com/watch?v=X7dF8f1Ku4E)**
+
 A [BepInEx 5](https://github.com/BepInEx/BepInEx) mod for
 [Dressmaker](https://store.steampowered.com/app/4019220/). It reads key depth with
 Wooting's official [Analog SDK](https://github.com/WootingKb/wooting-analog-sdk), which is
