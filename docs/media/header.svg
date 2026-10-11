@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="372" viewBox="0 0 1300 372">
+<style>@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&amp;family=Nunito:wght@500;700;800&amp;display=block');
+.title { font-family: Fraunces, Georgia, serif; font-weight: 700; fill: #f6eee3; }
+.sub { font-family: Nunito, 'Noto Sans', sans-serif; font-weight: 700; fill: #c9bccf; }
+.body { font-family: Nunito, 'Noto Sans', sans-serif; font-weight: 700; fill: #f6eee3; }
+.mono { font-family: 'iA Writer Mono S', 'Liberation Mono', monospace; fill: #f6eee3; }
+</style>
+<defs>
+  <pattern id="weave" width="14" height="14" patternUnits="userSpaceOnUse">
+    <rect width="14" height="14" fill="#2a2135"/>
+    <path d="M0 7h14M7 0v14" stroke="#352a44" stroke-width="1.2"/>
+  </pattern>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+    <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.35"/>
+  </filter>
+</defs>
+<rect width="1300" height="372" fill="url(#weave)"/>
+
+  <text x="70" y="150" class="title" style="font-size:86px">Analog Sewing</text>
+  <text x="74" y="208" class="sub" style="font-size:30px;fill:#f6eee3">Press lightly to sew slowly.</text>
+  <text x="74" y="250" class="sub" style="font-size:30px;fill:#f6eee3">Press harder to sew faster.</text>
+  <text x="74" y="306" class="sub" style="font-size:21px">A Dressmaker mod for Wooting analog keyboards</text>
+  
+  <g filter="url(#shadow)">
+    <rect x="856.0" y="216" width="198.0" height="38" rx="8" fill="#251d30" stroke="#352a44" stroke-width="2"/>
+    <rect x="942.0" y="184" width="26" height="34" rx="4" fill="#c9bccf"/>
+    <path d="M790 192 L804 142 H1106 L1120 192 Z" fill="#cbbfb1"/>
+    <rect x="804" y="134" width="302" height="44" rx="9" fill="#efe6da"/>
+    <text x="955.0" y="163" text-anchor="middle" class="body" style="fill:#6b5d70;font-size:18px;letter-spacing:3px">SPACE</text>
+  </g>
+  <path d="M955 46 V92" stroke="#f0bf5a" stroke-width="6" stroke-linecap="round"/>
+  <path d="M937 76 L955 96 L973 76" stroke="#f0bf5a" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="760" y1="318" x2="870" y2="318" stroke="#e8798c" stroke-width="5" stroke-linecap="round" stroke-dasharray="6 22"/>
+  <line x1="890" y1="318" x2="1010" y2="318" stroke="#e8798c" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 14"/>
+  <line x1="1030" y1="318" x2="1240" y2="318" stroke="#e8798c" stroke-width="5" stroke-linecap="round" stroke-dasharray="26 6"/>
+  <text x="760" y="352" class="sub" style="font-size:17px">slow</text>
+  <text x="1240" y="352" text-anchor="end" class="sub" style="font-size:17px">fast</text>
+
+</svg>

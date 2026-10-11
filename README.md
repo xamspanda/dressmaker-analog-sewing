@@ -1,5 +1,7 @@
 # Analog Sewing for Dressmaker
 
+![Analog Sewing: press lightly to sew slowly, press harder to sew faster](docs/media/header.png)
+
 Use a Wooting (or other Hall-effect analog) keyboard like a sewing machine foot pedal:
 press the sew key lightly to sew slowly, press harder to sew faster.
 
