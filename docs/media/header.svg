@@ -16,20 +16,23 @@
 </defs>
 <rect width="1300" height="372" fill="url(#weave)"/>
 
-  <text x="70" y="150" class="title" style="font-size:86px">Analog Sewing</text>
-  <text x="74" y="208" class="sub" style="font-size:30px;fill:#f6eee3">Press lightly to sew slowly.</text>
-  <text x="74" y="250" class="sub" style="font-size:30px;fill:#f6eee3">Press harder to sew faster.</text>
-  <text x="74" y="306" class="sub" style="font-size:21px">A Dressmaker mod for Wooting analog keyboards</text>
+  <text x="70" y="182" class="title" style="font-size:92px">Analog Sewing</text>
+  <text x="76" y="236" class="sub" style="font-size:26px">A Dressmaker mod for Wooting analog keyboards</text>
+  <path d="M1000 18 V62" stroke="#f0bf5a" stroke-width="6" stroke-linecap="round"/>
+  <path d="M982 46 L1000 66 L1018 46" stroke="#f0bf5a" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
   
   <g filter="url(#shadow)">
-    <rect x="856.0" y="216" width="198.0" height="38" rx="8" fill="#251d30" stroke="#352a44" stroke-width="2"/>
-    <rect x="942.0" y="184" width="26" height="34" rx="4" fill="#c9bccf"/>
-    <path d="M790 192 L804 142 H1106 L1120 192 Z" fill="#cbbfb1"/>
-    <rect x="804" y="134" width="302" height="44" rx="9" fill="#efe6da"/>
-    <text x="955.0" y="163" text-anchor="middle" class="body" style="fill:#6b5d70;font-size:18px;letter-spacing:3px">SPACE</text>
+    <rect x="966" y="246" width="6" height="20" rx="2" fill="#f0bf5a"/>
+    <rect x="1022" y="246" width="6" height="16" rx="2" fill="#f0bf5a"/>
+    <rect x="930" y="222" width="140" height="28" rx="5" fill="#2a2236" stroke="#352a44" stroke-width="2"/>
+    <rect x="870" y="222" width="260" height="9" rx="2" fill="#9a8fa6"/>
+    <path d="M944 192 H1056 L1070 224 H930 Z" fill="#5b4c6e"/>
+    <path d="M960 198 H1040 L1046 214 H954 Z" fill="#6f5f84"/>
+    <rect x="989" y="156" width="22" height="40" rx="3" fill="#e8798c"/>
+    <path d="M900 164 L920 98 Q1000 108 1080 98 L1100 164 Z" fill="#cbbfb1"/>
+    <path d="M900 164 L920 98 L932 103 L916 164 Z" fill="#b5a897"/>
+    <path d="M920 98 Q1000 108 1080 98 L1077 108 Q1000 118 923 108 Z" fill="#efe6da"/>
   </g>
-  <path d="M955 46 V92" stroke="#f0bf5a" stroke-width="6" stroke-linecap="round"/>
-  <path d="M937 76 L955 96 L973 76" stroke="#f0bf5a" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
   <line x1="760" y1="318" x2="870" y2="318" stroke="#e8798c" stroke-width="5" stroke-linecap="round" stroke-dasharray="6 22"/>
   <line x1="890" y1="318" x2="1010" y2="318" stroke="#e8798c" stroke-width="5" stroke-linecap="round" stroke-dasharray="12 14"/>
   <line x1="1030" y1="318" x2="1240" y2="318" stroke="#e8798c" stroke-width="5" stroke-linecap="round" stroke-dasharray="26 6"/>

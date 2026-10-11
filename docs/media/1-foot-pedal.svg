@@ -22,11 +22,16 @@
   <text x="330" y="380" text-anchor="middle" class="title" style="font-size:50px">Light press</text>
   
   <g filter="url(#shadow)">
-    <rect x="234.0" y="554" width="192.0" height="38" rx="8" fill="#251d30" stroke="#352a44" stroke-width="2"/>
-    <rect x="317.0" y="509.9" width="26" height="46.10000000000002" rx="4" fill="#c9bccf"/>
-    <path d="M170 517.9 L184 467.9 H476 L490 517.9 Z" fill="#cbbfb1"/>
-    <rect x="184" y="459.9" width="292" height="44" rx="9" fill="#efe6da"/>
-    <text x="330.0" y="488.9" text-anchor="middle" class="body" style="fill:#6b5d70;font-size:18px;letter-spacing:3px">SPACE</text>
+    <rect x="296" y="594" width="6" height="20" rx="2" fill="#f0bf5a"/>
+    <rect x="352" y="594" width="6" height="16" rx="2" fill="#f0bf5a"/>
+    <rect x="260" y="570" width="140" height="28" rx="5" fill="#2a2236" stroke="#352a44" stroke-width="2"/>
+    <rect x="200" y="570" width="260" height="9" rx="2" fill="#9a8fa6"/>
+    <path d="M274 540 H386 L400 572 H260 Z" fill="#5b4c6e"/>
+    <path d="M290 546 H370 L376 562 H284 Z" fill="#6f5f84"/>
+    <rect x="319" y="501.0" width="22" height="43.0" rx="3" fill="#e8798c"/>
+    <path d="M230 509.0 L250 443.0 Q330 453.0 410 443.0 L430 509.0 Z" fill="#cbbfb1"/>
+    <path d="M230 509.0 L250 443.0 L262 448.0 L246 509.0 Z" fill="#b5a897"/>
+    <path d="M250 443.0 Q330 453.0 410 443.0 L407 453.0 Q330 463.0 253 453.0 Z" fill="#efe6da"/>
   </g>
   <rect x="140.0" y="680" width="380" height="28" rx="14" fill="#2a2135"/>
   <rect x="140.0" y="680" width="41.3" height="28" rx="14" fill="#6cc4b8"/>
@@ -36,11 +41,16 @@
   <text x="960" y="380" text-anchor="middle" class="title" style="font-size:50px">Halfway</text>
   
   <g filter="url(#shadow)">
-    <rect x="864.0" y="554" width="192.0" height="38" rx="8" fill="#251d30" stroke="#352a44" stroke-width="2"/>
-    <rect x="947.0" y="524.2" width="26" height="31.80000000000001" rx="4" fill="#c9bccf"/>
-    <path d="M800 532.2 L814 482.2 H1106 L1120 532.2 Z" fill="#cbbfb1"/>
-    <rect x="814" y="474.2" width="292" height="44" rx="9" fill="#efe6da"/>
-    <text x="960.0" y="503.2" text-anchor="middle" class="body" style="fill:#6b5d70;font-size:18px;letter-spacing:3px">SPACE</text>
+    <rect x="926" y="594" width="6" height="20" rx="2" fill="#f0bf5a"/>
+    <rect x="982" y="594" width="6" height="16" rx="2" fill="#f0bf5a"/>
+    <rect x="890" y="570" width="140" height="28" rx="5" fill="#2a2236" stroke="#352a44" stroke-width="2"/>
+    <rect x="830" y="570" width="260" height="9" rx="2" fill="#9a8fa6"/>
+    <path d="M904 540 H1016 L1030 572 H890 Z" fill="#5b4c6e"/>
+    <path d="M920 546 H1000 L1006 562 H914 Z" fill="#6f5f84"/>
+    <rect x="949" y="514.0" width="22" height="30.0" rx="3" fill="#e8798c"/>
+    <path d="M860 522.0 L880 456.0 Q960 466.0 1040 456.0 L1060 522.0 Z" fill="#cbbfb1"/>
+    <path d="M860 522.0 L880 456.0 L892 461.0 L876 522.0 Z" fill="#b5a897"/>
+    <path d="M880 456.0 Q960 466.0 1040 456.0 L1037 466.0 Q960 476.0 883 466.0 Z" fill="#efe6da"/>
   </g>
   <rect x="770.0" y="680" width="380" height="28" rx="14" fill="#2a2135"/>
   <rect x="770.0" y="680" width="171.3" height="28" rx="14" fill="#6cc4b8"/>
@@ -50,11 +60,16 @@
   <text x="1590" y="380" text-anchor="middle" class="title" style="font-size:50px">Full press</text>
   
   <g filter="url(#shadow)">
-    <rect x="1494.0" y="554" width="192.0" height="38" rx="8" fill="#251d30" stroke="#352a44" stroke-width="2"/>
-    <rect x="1577.0" y="544.0" width="26" height="12.0" rx="4" fill="#c9bccf"/>
-    <path d="M1430 552.0 L1444 502.0 H1736 L1750 552.0 Z" fill="#cbbfb1"/>
-    <rect x="1444" y="494.0" width="292" height="44" rx="9" fill="#efe6da"/>
-    <text x="1590.0" y="523.0" text-anchor="middle" class="body" style="fill:#6b5d70;font-size:18px;letter-spacing:3px">SPACE</text>
+    <rect x="1556" y="594" width="6" height="20" rx="2" fill="#f0bf5a"/>
+    <rect x="1612" y="594" width="6" height="16" rx="2" fill="#f0bf5a"/>
+    <rect x="1520" y="570" width="140" height="28" rx="5" fill="#2a2236" stroke="#352a44" stroke-width="2"/>
+    <rect x="1460" y="570" width="260" height="9" rx="2" fill="#9a8fa6"/>
+    <path d="M1534 540 H1646 L1660 572 H1520 Z" fill="#5b4c6e"/>
+    <path d="M1550 546 H1630 L1636 562 H1544 Z" fill="#6f5f84"/>
+    <rect x="1579" y="532.0" width="22" height="12.0" rx="3" fill="#e8798c"/>
+    <path d="M1490 540.0 L1510 474.0 Q1590 484.0 1670 474.0 L1690 540.0 Z" fill="#cbbfb1"/>
+    <path d="M1490 540.0 L1510 474.0 L1522 479.0 L1506 540.0 Z" fill="#b5a897"/>
+    <path d="M1510 474.0 Q1590 484.0 1670 474.0 L1667 484.0 Q1590 494.0 1513 484.0 Z" fill="#efe6da"/>
   </g>
   <rect x="1400.0" y="680" width="380" height="28" rx="14" fill="#2a2135"/>
   <rect x="1400.0" y="680" width="380.0" height="28" rx="14" fill="#6cc4b8"/>

@@ -30,27 +30,22 @@
   <line x1="1636.0" y1="170" x2="1636.0" y2="890" stroke="#f0bf5a" stroke-width="3" stroke-dasharray="8 8"/>
   <circle cx="404.0" cy="854.0" r="13" fill="#e8798c"/>
   <circle cx="1636.0" cy="170.0" r="13" fill="#f0bf5a"/>
-  <rect x="290" y="200" width="560" height="460" rx="22" fill="#2a2135" opacity="0.92" stroke="#352a44" stroke-width="2"/>
+  <rect x="290" y="200" width="500" height="340" rx="22" fill="#2a2135" opacity="0.92" stroke="#352a44" stroke-width="2"/>
   <text x="324" y="230" class="sub" style="font-size:22px;letter-spacing:2px">DEFAULT SETTINGS</text>
   
-  <circle cx="324" cy="261" r="11" fill="#e8798c"/>
-  <text x="350" y="270" class="mono" style="font-size:29px">StartDepthMm = <tspan style="fill:#e8798c">0.4</tspan></text>
-  <text x="350" y="304" class="sub" style="font-size:24px">Press this far to start sewing</text>
+  <circle cx="324" cy="273" r="11" fill="#e8798c"/>
+  <text x="350" y="282" class="mono" style="font-size:29px">StartDepthMm = <tspan style="fill:#e8798c">0.4</tspan></text>
   
-  <circle cx="324" cy="343" r="11" fill="#f0bf5a"/>
-  <text x="350" y="352" class="mono" style="font-size:29px">FullSpeedDepthMm = <tspan style="fill:#f0bf5a">3.6</tspan></text>
-  <text x="350" y="386" class="sub" style="font-size:24px">Press this far for full speed</text>
+  <circle cx="324" cy="329" r="11" fill="#f0bf5a"/>
+  <text x="350" y="338" class="mono" style="font-size:29px">FullSpeedDepthMm = <tspan style="fill:#f0bf5a">3.6</tspan></text>
   
-  <circle cx="324" cy="425" r="11" fill="#e8798c"/>
-  <text x="350" y="434" class="mono" style="font-size:29px">MinSpeedPercent = <tspan style="fill:#e8798c">5</tspan></text>
-  <text x="350" y="468" class="sub" style="font-size:24px">Speed when sewing starts</text>
+  <circle cx="324" cy="385" r="11" fill="#e8798c"/>
+  <text x="350" y="394" class="mono" style="font-size:29px">MinSpeedPercent = <tspan style="fill:#e8798c">5</tspan></text>
   
-  <circle cx="324" cy="507" r="11" fill="#f0bf5a"/>
-  <text x="350" y="516" class="mono" style="font-size:29px">MaxSpeedPercent = <tspan style="fill:#f0bf5a">100</tspan></text>
-  <text x="350" y="550" class="sub" style="font-size:24px">Top speed</text>
+  <circle cx="324" cy="441" r="11" fill="#f0bf5a"/>
+  <text x="350" y="450" class="mono" style="font-size:29px">MaxSpeedPercent = <tspan style="fill:#f0bf5a">100</tspan></text>
   
-  <circle cx="324" cy="589" r="11" fill="#6cc4b8"/>
-  <text x="350" y="598" class="mono" style="font-size:29px">Curve = <tspan style="fill:#6cc4b8">1.5</tspan></text>
-  <text x="350" y="632" class="sub" style="font-size:24px">Higher = finer control when slow</text>
+  <circle cx="324" cy="497" r="11" fill="#6cc4b8"/>
+  <text x="350" y="506" class="mono" style="font-size:29px">Curve = <tspan style="fill:#6cc4b8">1.5</tspan></text>
 
 </svg>
