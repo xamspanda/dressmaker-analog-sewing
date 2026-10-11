@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# Build release zips in dist/:
-#   AnalogSewing-<version>.zip             - the mod (extract into the game folder; needs BepInEx 5)
-#   AnalogSewing-LinuxBridge-<version>.zip - optional Linux/Proton fallback bridge
+# Build the release zip dist/AnalogSewing-<version>.zip (extract into the game folder; needs BepInEx 5).
 # Needs a Dressmaker install with BepInEx to compile against (see DRESSMAKER_DIR in the csproj).
 set -euo pipefail
 
@@ -32,16 +30,9 @@ bsdtar -xOf "$CACHE/$SDK_ZIP" release/wooting_analog_sdk_dist.dll > "$PLUGIN/woo
 cp "$ROOT/LICENSE" "$PLUGIN/LICENSE.txt"
 cp "$ROOT/THIRD_PARTY_NOTICES.md" "$PLUGIN/THIRD_PARTY_NOTICES.md"
 
-BRIDGE="$STAGE/bridge/AnalogSewing-LinuxBridge"
-mkdir -p "$BRIDGE"
-cp "$ROOT/tools/linux-bridge/"{wooting-bridge.py,with-bridge.sh,README.md} "$ROOT/LICENSE" "$BRIDGE/"
-
 MOD_ZIP="$ROOT/dist/AnalogSewing-$VERSION.zip"
-BRIDGE_ZIP="$ROOT/dist/AnalogSewing-LinuxBridge-$VERSION.zip"
-rm -f "$MOD_ZIP" "$BRIDGE_ZIP"
+rm -f "$MOD_ZIP"
 (cd "$STAGE/mod" && zip -qr "$MOD_ZIP" BepInEx)
-(cd "$STAGE/bridge" && zip -qr "$BRIDGE_ZIP" AnalogSewing-LinuxBridge)
 
 echo "Built:"
 unzip -l "$MOD_ZIP" | sed -n '4,$p'
-echo "$BRIDGE_ZIP"

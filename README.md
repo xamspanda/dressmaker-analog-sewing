@@ -44,7 +44,6 @@ change settings in-game with
 | `Sewing.MaxSpeedPercent` | 100 | Speed at the full-speed depth |
 | `Sewing.Curve` | 1.5 | 1 = linear; higher = finer control at low speed |
 | `Input.SewKey` | Space | Analog key to sew with (`Space`, `F`, `LeftShift`, `0x2C`, ...) |
-| `Input.Source` | Auto | `WootingSdk`, `LinuxBridge`, or `Auto` (SDK, falling back to the bridge) |
 | `Advanced.KeyTravelMm` | 4.0 | Your switches' total travel |
 | `Display.MoveSpeedSlider` | true | Move the in-game speed slider to show the current speed |
 
@@ -56,8 +55,7 @@ slider's speed.
 - **Log says "No analog keyboard found":** check the keyboard is plugged in, then restart
   the game. The log line above it shows how many devices the SDK found at startup.
 - **Linux/Proton can't see the keyboard:** make sure your user can read the keyboard's
-  `/dev/hidraw*` devices (the same udev rules Wootility needs on Linux), or use the
-  [Linux bridge](tools/linux-bridge/).
+  `/dev/hidraw*` devices (the same udev rules Wootility needs on Linux).
 - **Nothing in the log from Analog Sewing:** BepInEx isn't loading; on Proton check the
   `winhttp` launch option.
 

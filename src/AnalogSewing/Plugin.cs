@@ -15,9 +15,7 @@ namespace AnalogSewing
 
         internal static ManualLogSource Log;
 
-        internal static ConfigEntry<InputSource> Source;
         internal static ConfigEntry<string> SewKey;
-        internal static ConfigEntry<int> BridgePort;
         internal static ConfigEntry<float> StartDepthMm;
         internal static ConfigEntry<float> FullSpeedDepthMm;
         internal static ConfigEntry<int> MinSpeedPercent;
@@ -43,14 +41,8 @@ namespace AnalogSewing
 
         private void BindConfig()
         {
-            Source = Config.Bind("Input", "Source", InputSource.Auto,
-                "Where key depth comes from. Auto uses the built-in Wooting Analog SDK, falling back to the " +
-                "Linux bridge (tools/linux-bridge) if the SDK finds no keyboard.");
             SewKey = Config.Bind("Input", "SewKey", "Space",
                 "Analog key that drives the sewing machine: a key name (Space, F, LeftShift, ...) or a HID usage code (0x2C).");
-            BridgePort = Config.Bind("Input", "BridgePort", 47613,
-                new ConfigDescription("UDP port the Linux bridge sends to. Restart the game after changing.",
-                    new AcceptableValueRange<int>(1024, 65535)));
 
             StartDepthMm = Config.Bind("Sewing", "StartDepthMm", 0.4f,
                 new ConfigDescription("How far (mm) the key must be pressed before the machine starts sewing, at minimum speed. " +

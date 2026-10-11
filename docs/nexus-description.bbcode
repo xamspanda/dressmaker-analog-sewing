@@ -35,7 +35,7 @@ After the first launch, edit [i]BepInEx/config/xamspanda.dressmaker.analogsewing
 [/list]
 
 [size=4][b]Troubleshooting[/b][/size]
-Check [i]BepInEx/LogOutput.log[/i]. It should say "Reading key depth from the Wooting Analog SDK". On Linux, if it says no analog keyboard was found, see the optional Linux bridge file and the GitHub page.
+Check [i]BepInEx/LogOutput.log[/i]. It should say "Reading key depth from the Wooting Analog SDK". On Linux, if no analog keyboard is found, make sure your user can read the keyboard's /dev/hidraw devices (the same udev rules Wootility needs).
 
 [size=4][b]Source & credits[/b][/size]
 Source code: [url=https://github.com/xamspanda/dressmaker-analog-sewing]GitHub[/url] (MIT)
