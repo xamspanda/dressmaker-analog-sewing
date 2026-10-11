@@ -16,54 +16,49 @@
 </defs>
 <rect width="1920" height="1080" fill="url(#weave)"/>
 
-  <text x="960" y="150" text-anchor="middle" class="title" style="font-size:80px">Your keyboard is the foot pedal</text>
-  <text x="960" y="220" text-anchor="middle" class="sub" style="font-size:34px">The sewing machine's speed follows how far you press Space</text>
+  <text x="960" y="180" text-anchor="middle" class="title" style="font-size:86px">Your keyboard is the foot pedal</text>
   
-  <rect x="60" y="300" width="540" height="620" rx="28" fill="#3d3150" opacity="0.92"/>
-  <text x="330" y="380" text-anchor="middle" class="title" style="font-size:46px">Light press</text>
-  
-  <g filter="url(#shadow)">
-    <rect x="234.0" y="544" width="192.0" height="38" rx="8" fill="#251d30" stroke="#352a44" stroke-width="2"/>
-    <rect x="317.0" y="499.9" width="26" height="46.10000000000002" rx="4" fill="#c9bccf"/>
-    <path d="M170 507.9 L184 457.9 H476 L490 507.9 Z" fill="#cbbfb1"/>
-    <rect x="184" y="449.9" width="292" height="44" rx="9" fill="#efe6da"/>
-    <text x="330.0" y="478.9" text-anchor="middle" class="body" style="fill:#6b5d70;font-size:18px;letter-spacing:3px">SPACE</text>
-  </g>
-  <text x="330" y="650" text-anchor="middle" class="mono" style="font-size:30px">0.9 mm</text>
-  <rect x="140.0" y="700" width="380" height="26" rx="13" fill="#2a2135"/>
-  <rect x="140.0" y="700" width="41.3" height="26" rx="13" fill="#6cc4b8"/>
-  <text x="330" y="780" text-anchor="middle" class="body" style="font-size:34px">11% speed</text>
-  <line x1="130" y1="850" x2="530" y2="850" stroke="#e8798c" stroke-width="6" stroke-linecap="round" stroke-dasharray="8.716876844316387 23.60914837700158"/>
-  <rect x="690" y="300" width="540" height="620" rx="28" fill="#3d3150" opacity="0.92"/>
-  <text x="960" y="380" text-anchor="middle" class="title" style="font-size:46px">Halfway</text>
+  <rect x="60" y="290" width="540" height="660" rx="28" fill="#3d3150" opacity="0.92"/>
+  <text x="330" y="380" text-anchor="middle" class="title" style="font-size:50px">Light press</text>
   
   <g filter="url(#shadow)">
-    <rect x="864.0" y="544" width="192.0" height="38" rx="8" fill="#251d30" stroke="#352a44" stroke-width="2"/>
-    <rect x="947.0" y="514.2" width="26" height="31.80000000000001" rx="4" fill="#c9bccf"/>
-    <path d="M800 522.2 L814 472.2 H1106 L1120 522.2 Z" fill="#cbbfb1"/>
-    <rect x="814" y="464.2" width="292" height="44" rx="9" fill="#efe6da"/>
-    <text x="960.0" y="493.2" text-anchor="middle" class="body" style="fill:#6b5d70;font-size:18px;letter-spacing:3px">SPACE</text>
+    <rect x="234.0" y="554" width="192.0" height="38" rx="8" fill="#251d30" stroke="#352a44" stroke-width="2"/>
+    <rect x="317.0" y="509.9" width="26" height="46.10000000000002" rx="4" fill="#c9bccf"/>
+    <path d="M170 517.9 L184 467.9 H476 L490 517.9 Z" fill="#cbbfb1"/>
+    <rect x="184" y="459.9" width="292" height="44" rx="9" fill="#efe6da"/>
+    <text x="330.0" y="488.9" text-anchor="middle" class="body" style="fill:#6b5d70;font-size:18px;letter-spacing:3px">SPACE</text>
   </g>
-  <text x="960" y="650" text-anchor="middle" class="mono" style="font-size:30px">2.2 mm</text>
-  <rect x="770.0" y="700" width="380" height="26" rx="13" fill="#2a2135"/>
-  <rect x="770.0" y="700" width="171.3" height="26" rx="13" fill="#6cc4b8"/>
-  <text x="960" y="780" text-anchor="middle" class="body" style="font-size:34px">45% speed</text>
-  <line x1="760" y1="850" x2="1160" y2="850" stroke="#e8798c" stroke-width="6" stroke-linecap="round" stroke-dasharray="17.26953125 16.0828125"/>
-  <rect x="1320" y="300" width="540" height="620" rx="28" fill="#3d3150" opacity="0.92"/>
-  <text x="1590" y="380" text-anchor="middle" class="title" style="font-size:46px">Full press</text>
+  <rect x="140.0" y="680" width="380" height="28" rx="14" fill="#2a2135"/>
+  <rect x="140.0" y="680" width="41.3" height="28" rx="14" fill="#6cc4b8"/>
+  <text x="330" y="770" text-anchor="middle" class="body" style="font-size:38px">11% speed</text>
+  <line x1="130" y1="860" x2="530" y2="860" stroke="#e8798c" stroke-width="6" stroke-linecap="round" stroke-dasharray="8.716876844316387 23.60914837700158"/>
+  <rect x="690" y="290" width="540" height="660" rx="28" fill="#3d3150" opacity="0.92"/>
+  <text x="960" y="380" text-anchor="middle" class="title" style="font-size:50px">Halfway</text>
   
   <g filter="url(#shadow)">
-    <rect x="1494.0" y="544" width="192.0" height="38" rx="8" fill="#251d30" stroke="#352a44" stroke-width="2"/>
-    <rect x="1577.0" y="534.0" width="26" height="12.0" rx="4" fill="#c9bccf"/>
-    <path d="M1430 542.0 L1444 492.0 H1736 L1750 542.0 Z" fill="#cbbfb1"/>
-    <rect x="1444" y="484.0" width="292" height="44" rx="9" fill="#efe6da"/>
-    <text x="1590.0" y="513.0" text-anchor="middle" class="body" style="fill:#6b5d70;font-size:18px;letter-spacing:3px">SPACE</text>
+    <rect x="864.0" y="554" width="192.0" height="38" rx="8" fill="#251d30" stroke="#352a44" stroke-width="2"/>
+    <rect x="947.0" y="524.2" width="26" height="31.80000000000001" rx="4" fill="#c9bccf"/>
+    <path d="M800 532.2 L814 482.2 H1106 L1120 532.2 Z" fill="#cbbfb1"/>
+    <rect x="814" y="474.2" width="292" height="44" rx="9" fill="#efe6da"/>
+    <text x="960.0" y="503.2" text-anchor="middle" class="body" style="fill:#6b5d70;font-size:18px;letter-spacing:3px">SPACE</text>
   </g>
-  <text x="1590" y="650" text-anchor="middle" class="mono" style="font-size:30px">4.0 mm</text>
-  <rect x="1400.0" y="700" width="380" height="26" rx="13" fill="#2a2135"/>
-  <rect x="1400.0" y="700" width="380.0" height="26" rx="13" fill="#6cc4b8"/>
-  <text x="1590" y="780" text-anchor="middle" class="body" style="font-size:34px">100% speed</text>
-  <line x1="1390" y1="850" x2="1790" y2="850" stroke="#e8798c" stroke-width="6" stroke-linecap="round" stroke-dasharray="31.0 4.0"/>
-  <text x="960" y="1010" text-anchor="middle" class="sub" style="font-size:26px">Let go and the machine stops. Right-click sewing and the speed slider still work as normal.</text>
+  <rect x="770.0" y="680" width="380" height="28" rx="14" fill="#2a2135"/>
+  <rect x="770.0" y="680" width="171.3" height="28" rx="14" fill="#6cc4b8"/>
+  <text x="960" y="770" text-anchor="middle" class="body" style="font-size:38px">45% speed</text>
+  <line x1="760" y1="860" x2="1160" y2="860" stroke="#e8798c" stroke-width="6" stroke-linecap="round" stroke-dasharray="17.26953125 16.0828125"/>
+  <rect x="1320" y="290" width="540" height="660" rx="28" fill="#3d3150" opacity="0.92"/>
+  <text x="1590" y="380" text-anchor="middle" class="title" style="font-size:50px">Full press</text>
+  
+  <g filter="url(#shadow)">
+    <rect x="1494.0" y="554" width="192.0" height="38" rx="8" fill="#251d30" stroke="#352a44" stroke-width="2"/>
+    <rect x="1577.0" y="544.0" width="26" height="12.0" rx="4" fill="#c9bccf"/>
+    <path d="M1430 552.0 L1444 502.0 H1736 L1750 552.0 Z" fill="#cbbfb1"/>
+    <rect x="1444" y="494.0" width="292" height="44" rx="9" fill="#efe6da"/>
+    <text x="1590.0" y="523.0" text-anchor="middle" class="body" style="fill:#6b5d70;font-size:18px;letter-spacing:3px">SPACE</text>
+  </g>
+  <rect x="1400.0" y="680" width="380" height="28" rx="14" fill="#2a2135"/>
+  <rect x="1400.0" y="680" width="380.0" height="28" rx="14" fill="#6cc4b8"/>
+  <text x="1590" y="770" text-anchor="middle" class="body" style="font-size:38px">100% speed</text>
+  <line x1="1390" y1="860" x2="1790" y2="860" stroke="#e8798c" stroke-width="6" stroke-linecap="round" stroke-dasharray="31.0 4.0"/>
 
 </svg>

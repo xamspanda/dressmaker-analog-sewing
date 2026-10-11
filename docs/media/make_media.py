@@ -104,26 +104,23 @@ def pedal():
         gauge_w = 380
         dash = (6 + pct * 0.25, max(26 - pct * 0.22, 4))
         panels.append(f"""
-  <rect x="{cx - 270}" y="300" width="540" height="620" rx="28" fill="{CARD}" opacity="0.92"/>
-  <text x="{cx}" y="380" text-anchor="middle" class="title" style="font-size:46px">{name}</text>
-  {keycap(cx - 160, 440, 320, depth_px)}
-  <text x="{cx}" y="650" text-anchor="middle" class="mono" style="font-size:30px">{mm:.1f} mm</text>
-  <rect x="{cx - gauge_w/2}" y="700" width="{gauge_w}" height="26" rx="13" fill="{BG}"/>
-  <rect x="{cx - gauge_w/2}" y="700" width="{gauge_w * pct / 100:.1f}" height="26" rx="13" fill="{TEAL}"/>
-  <text x="{cx}" y="780" text-anchor="middle" class="body" style="font-size:34px">{pct:.0f}% speed</text>
-  {stitches(cx - 200, 850, cx + 200, 850, dash=dash, width=6)}""")
+  <rect x="{cx - 270}" y="290" width="540" height="660" rx="28" fill="{CARD}" opacity="0.92"/>
+  <text x="{cx}" y="380" text-anchor="middle" class="title" style="font-size:50px">{name}</text>
+  {keycap(cx - 160, 450, 320, depth_px)}
+  <rect x="{cx - gauge_w/2}" y="680" width="{gauge_w}" height="28" rx="14" fill="{BG}"/>
+  <rect x="{cx - gauge_w/2}" y="680" width="{gauge_w * pct / 100:.1f}" height="28" rx="14" fill="{TEAL}"/>
+  <text x="{cx}" y="770" text-anchor="middle" class="body" style="font-size:38px">{pct:.0f}% speed</text>
+  {stitches(cx - 200, 860, cx + 200, 860, dash=dash, width=6)}""")
     body = f"""
-  <text x="960" y="150" text-anchor="middle" class="title" style="font-size:80px">Your keyboard is the foot pedal</text>
-  <text x="960" y="220" text-anchor="middle" class="sub" style="font-size:34px">The sewing machine's speed follows how far you press Space</text>
+  <text x="960" y="180" text-anchor="middle" class="title" style="font-size:86px">Your keyboard is the foot pedal</text>
   {''.join(panels)}
-  <text x="960" y="1010" text-anchor="middle" class="sub" style="font-size:26px">Let go and the machine stops. Right-click sewing and the speed slider still work as normal.</text>
 """
     return svg(w, h, body)
 
 
 def curve():
     w, h = 1920, 1080
-    gx, gy, gw, gh = 260, 260, 1000, 620  # plot area
+    gx, gy, gw, gh = 250, 170, 1540, 720  # plot area
 
     def px(mm):
         return gx + mm / TRAVEL_MM * gw
@@ -133,7 +130,7 @@ def curve():
 
     def path(c):
         pts = [f"M{px(0):.1f} {py(0):.1f}", f"L{px(START_MM):.1f} {py(0):.1f}"]
-        steps = 80
+        steps = 100
         for k in range(steps + 1):
             mm = START_MM + (TRAVEL_MM - START_MM) * k / steps
             pts.append(f"L{px(mm):.1f} {py(speed(mm, c)):.1f}")
@@ -141,41 +138,43 @@ def curve():
 
     grid = "".join(
         f'<line x1="{gx}" y1="{py(p)}" x2="{gx + gw}" y2="{py(p)}" stroke="{BG2}" stroke-width="2"/>'
-        f'<text x="{gx - 18}" y="{py(p) + 9}" text-anchor="end" class="sub" style="font-size:24px">{p}%</text>'
+        f'<text x="{gx - 22}" y="{py(p) + 10}" text-anchor="end" class="sub" style="font-size:28px">{p}%</text>'
         for p in (0, 25, 50, 75, 100))
     xticks = "".join(
-        f'<text x="{px(m)}" y="{gy + gh + 44}" text-anchor="middle" class="sub" style="font-size:24px">{m} mm</text>'
+        f'<text x="{px(m)}" y="{gy + gh + 50}" text-anchor="middle" class="sub" style="font-size:28px">{m} mm</text>'
         for m in (0, 1, 2, 3, 4))
 
-    def setting(y, key, value, desc, color):
+    lx, ly = gx + 40, gy + 30  # legend, in the empty upper-left of the plot
+
+    def setting(row, key, value, desc, color):
+        y = ly + 70 + row * 82
         return f"""
-  <circle cx="1388" cy="{y - 9}" r="10" fill="{color}"/>
-  <text x="1412" y="{y}" class="mono" style="font-size:28px">{key} = <tspan style="fill:{color}">{value}</tspan></text>
-  <text x="1412" y="{y + 38}" class="sub" style="font-size:24px">{desc}</text>"""
+  <circle cx="{lx + 34}" cy="{y - 9}" r="11" fill="{color}"/>
+  <text x="{lx + 60}" y="{y}" class="mono" style="font-size:29px">{key} = <tspan style="fill:{color}">{value}</tspan></text>
+  <text x="{lx + 60}" y="{y + 34}" class="sub" style="font-size:24px">{desc}</text>"""
 
     body = f"""
-  <text x="960" y="130" text-anchor="middle" class="title" style="font-size:80px">Tune the feel</text>
-  <text x="960" y="196" text-anchor="middle" class="sub" style="font-size:32px">Every part of the response is configurable (defaults shown)</text>
-  <rect x="150" y="230" width="1180" height="760" rx="28" fill="{CARD}" opacity="0.92"/>
+  <rect x="40" y="30" width="1840" height="1020" rx="32" fill="{CARD}" opacity="0.92"/>
+  <text x="{gx}" y="118" class="title" style="font-size:64px">Tune the feel</text>
   {grid}{xticks}
-  <text x="{gx + gw/2}" y="{gy + gh + 92}" text-anchor="middle" class="body" style="font-size:28px">How far you press the key</text>
-  <text transform="translate(186 {gy + gh/2}) rotate(-90)" text-anchor="middle" class="body" style="font-size:28px">Machine speed</text>
+  <text x="{gx + gw/2}" y="{gy + gh + 108}" text-anchor="middle" class="body" style="font-size:32px">How far you press the key</text>
+  <text transform="translate(108 {gy + gh/2}) rotate(-90)" text-anchor="middle" class="body" style="font-size:32px">Machine speed</text>
   <path d="{path(1.0)}" fill="none" stroke="{MUTED}" stroke-width="3" stroke-dasharray="10 10" opacity="0.6"/>
   <path d="{path(3.0)}" fill="none" stroke="{MUTED}" stroke-width="3" stroke-dasharray="10 10" opacity="0.6"/>
-  <text x="{px(1.55)}" y="{py(speed(1.75, 1.0)) - 30}" class="sub" style="font-size:22px">Curve 1.0</text>
-  <text x="{px(2.85)}" y="{py(speed(2.85, 3.0)) + 36}" class="sub" style="font-size:22px">Curve 3.0</text>
-  <path d="{path(CURVE)}" fill="none" stroke="{TEAL}" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="{px(2.3)}" y="{py(speed(2.3, 1.0)) - 24}" text-anchor="end" class="sub" style="font-size:26px">Curve 1.0</text>
+  <text x="{px(2.9)}" y="{py(speed(2.9, 3.0)) + 44}" class="sub" style="font-size:26px">Curve 3.0</text>
+  <path d="{path(CURVE)}" fill="none" stroke="{TEAL}" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
   <line x1="{px(START_MM)}" y1="{gy}" x2="{px(START_MM)}" y2="{gy + gh}" stroke="{ROSE}" stroke-width="3" stroke-dasharray="8 8"/>
   <line x1="{px(FULL_MM)}" y1="{gy}" x2="{px(FULL_MM)}" y2="{gy + gh}" stroke="{MUSTARD}" stroke-width="3" stroke-dasharray="8 8"/>
-  <circle cx="{px(START_MM)}" cy="{py(MIN_PCT)}" r="11" fill="{ROSE}"/>
-  <circle cx="{px(FULL_MM)}" cy="{py(MAX_PCT)}" r="11" fill="{MUSTARD}"/>
-  {setting(330, "StartDepthMm", START_MM, "Press this far to start sewing", ROSE)}
-  {setting(450, "FullSpeedDepthMm", FULL_MM, "Press this far for full speed", MUSTARD)}
-  {setting(570, "MinSpeedPercent", MIN_PCT, "Speed when sewing starts", ROSE)}
-  {setting(690, "MaxSpeedPercent", MAX_PCT, "Top speed", MUSTARD)}
-  {setting(810, "Curve", CURVE, "Higher = finer control when slow", TEAL)}
-  <text x="1388" y="950" class="sub" style="font-size:24px">Edit the .cfg file, or press F1 with</text>
-  <text x="1388" y="986" class="sub" style="font-size:24px">ConfigurationManager installed</text>
+  <circle cx="{px(START_MM)}" cy="{py(MIN_PCT)}" r="13" fill="{ROSE}"/>
+  <circle cx="{px(FULL_MM)}" cy="{py(MAX_PCT)}" r="13" fill="{MUSTARD}"/>
+  <rect x="{lx}" y="{ly}" width="560" height="460" rx="22" fill="{BG}" opacity="0.92" stroke="{BG2}" stroke-width="2"/>
+  <text x="{lx + 34}" y="{ly + 2 + 28}" class="sub" style="font-size:22px;letter-spacing:2px">DEFAULT SETTINGS</text>
+  {setting(0, "StartDepthMm", START_MM, "Press this far to start sewing", ROSE)}
+  {setting(1, "FullSpeedDepthMm", FULL_MM, "Press this far for full speed", MUSTARD)}
+  {setting(2, "MinSpeedPercent", MIN_PCT, "Speed when sewing starts", ROSE)}
+  {setting(3, "MaxSpeedPercent", MAX_PCT, "Top speed", MUSTARD)}
+  {setting(4, "Curve", CURVE, "Higher = finer control when slow", TEAL)}
 """
     return svg(w, h, body)
 
