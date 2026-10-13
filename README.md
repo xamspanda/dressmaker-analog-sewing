@@ -22,7 +22,7 @@ Mod, choose `AnalogSewing-<version>.zip`, and restart Dressmaker.
 
 1. Install **BepInEx 5 (x64)** into the Dressmaker folder (the one containing `Dressmaker.exe`):
    extract [BepInEx_win_x64_5.4.23.5.zip](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5)
-   there.
+   there. Use 5.4.23.5 or newer: the older BepInEx on Nexus doesn't work with this game.
 2. Extract `AnalogSewing-<version>.zip` into the same folder, so you end up with
    `BepInEx/plugins/AnalogSewing.dll`.
 3. **Linux / Steam Deck (Proton) only:** set the game's Steam launch options to
