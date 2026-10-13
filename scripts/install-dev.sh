@@ -23,5 +23,6 @@ fi
 "$ROOT/scripts/package.sh" >/dev/null
 VERSION="$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' "$ROOT/src/AnalogSewing/AnalogSewing.csproj")"
 rm -f "$DRESSMAKER_DIR/BepInEx/plugins/AnalogSew.dll"   # pre-release name
+rm -f "$DRESSMAKER_DIR"/BepInEx/plugins/AnalogSewing/{AnalogSewing,wooting_analog_sdk_dist}.dll   # 1.0.0 layout
 bsdtar -xf "$ROOT/dist/AnalogSewing-$VERSION.zip" -C "$DRESSMAKER_DIR"
 echo "Installed Analog Sewing $VERSION into $DRESSMAKER_DIR"

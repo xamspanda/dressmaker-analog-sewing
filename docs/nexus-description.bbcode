@@ -6,32 +6,38 @@ Use your Wooting keyboard like a sewing machine foot pedal: press the sew key li
 [*]Sewing speed follows how far you press Space, from a gentle crawl to full speed
 [*]Configurable start depth, full-speed depth, speed range and response curve
 [*]Works regardless of your keyboard's actuation point or Rapid Trigger settings
-[*]Wooting's official Analog SDK is included - nothing else to install
+[*]Wooting's official Analog SDK is built in - nothing else to install
+[*]Works on its own or with [url=https://www.nexusmods.com/dressmaker/mods/1]Yuuma's Dressmaker ModLoader[/url] (settings, keybinds and Mod Manager support)
 [*]Windows and Linux / Steam Deck (Proton)
 [*]Without an analog keyboard, the game plays exactly as normal
 [/list]
 
 [size=4][b]Requirements[/b][/size]
 [list]
-[*][url=https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5]BepInEx 5 (x64)[/url]
+[*][url=https://www.nexusmods.com/dressmaker/mods/1]Yuuma's Dressmaker ModLoader[/url] (recommended), or [url=https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5]BepInEx 5 (x64)[/url] on its own
 [*]A Wooting analog keyboard (any keyboard supported by the Wooting Analog SDK)
 [/list]
 
 [size=4][b]Installation[/b][/size]
+[b]With Yuuma's Dressmaker ModLoader:[/b] in the game, open Options > Mod Manager > Install/Update Mod, choose the downloaded zip, and restart Dressmaker.
+
+[b]Without it:[/b]
 [list=1]
 [*]Install BepInEx 5 x64 into the Dressmaker folder (the one containing Dressmaker.exe).
-[*]Extract this mod into the same folder, so you have [i]BepInEx/plugins/AnalogSewing/AnalogSewing.dll[/i].
+[*]Extract this mod into the same folder, so you have [i]BepInEx/plugins/AnalogSewing.dll[/i].
 [*][b]Linux / Steam Deck only:[/b] set the Steam launch options to [code]WINEDLLOVERRIDES="winhttp=n,b" %command%[/code]
 [/list]
 
+[b]Updating from 1.0.0:[/b] after installing, delete [i]AnalogSewing.dll[/i] and [i]wooting_analog_sdk_dist.dll[/i] from [i]BepInEx/plugins/AnalogSewing/[/i]. The mod is a single file now.
+
 [size=4][b]Configuration[/b][/size]
-After the first launch, edit [i]BepInEx/config/xamspanda.dressmaker.analogsewing.cfg[/i], or use [url=https://github.com/BepInEx/BepInEx.ConfigurationManager]ConfigurationManager[/url] to change settings in-game (F1).
+With the ModLoader, change settings in Mod Settings > Analog Sewing. Otherwise edit [i]BepInEx/config/xamspanda.dressmaker.analogsewing.cfg[/i] after the first launch, or use [url=https://github.com/BepInEx/BepInEx.ConfigurationManager]ConfigurationManager[/url] in-game (F1).
 [list]
 [*][b]StartDepthMm[/b] (0.4) - how far to press before the machine starts
 [*][b]FullSpeedDepthMm[/b] (3.6) - how far to press for full speed
 [*][b]MinSpeedPercent / MaxSpeedPercent[/b] (5 / 100) - speed range
 [*][b]Curve[/b] (1.5) - higher gives finer control at low speed
-[*][b]SewKey[/b] (Space) - which analog key sews
+[*][b]SewKey[/b] (Space) - which analog key sews (with the ModLoader, rebind Sew in Mod Settings > Keybinds instead)
 [/list]
 
 [size=4][b]Troubleshooting[/b][/size]

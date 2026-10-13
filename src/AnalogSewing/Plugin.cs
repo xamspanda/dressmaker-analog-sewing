@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
@@ -11,15 +13,15 @@ namespace AnalogSewing
     {
         public const string Guid = "xamspanda.dressmaker.analogsewing";
         public const string Name = "Analog Sewing";
-        public const string Version = "1.0.0";
+        public const string Version = "1.1.0";
 
         internal static ManualLogSource Log;
 
         internal static ConfigEntry<string> SewKey;
         internal static ConfigEntry<float> StartDepthMm;
         internal static ConfigEntry<float> FullSpeedDepthMm;
-        internal static ConfigEntry<int> MinSpeedPercent;
-        internal static ConfigEntry<int> MaxSpeedPercent;
+        internal static ConfigEntry<float> MinSpeedPercent;
+        internal static ConfigEntry<float> MaxSpeedPercent;
         internal static ConfigEntry<float> Curve;
         internal static ConfigEntry<float> KeyTravelMm;
         internal static ConfigEntry<bool> MoveSpeedSlider;
@@ -32,12 +34,28 @@ namespace AnalogSewing
             if (!HidKeys.TryParse(SewKey.Value, out _))
                 Log.LogWarning($"Unknown SewKey '{SewKey.Value}', using Space. Use a key name like Space, F, LeftShift, or a HID code like 0x2C.");
 
+            WarnAboutOldCopy();
             AnalogInput.Start();
             Patches.Apply(new Harmony(Guid));
             Log.LogInfo($"{Name} {Version} loaded (game version {Application.version})");
         }
 
+        // In Start rather than Awake: every plugin's Awake has run by then, so Yuuma's Dressmaker ModLoader is
+        // ready whatever the load order. (Declaring it as a soft BepInDependency instead breaks its Mod Manager's
+        // "Loading details", which can't read that attribute.)
+        private void Start() => ModLoader.Init(this);
+
         private void OnApplicationQuit() => AnalogInput.Stop();
+
+        // 1.0.0 installed to BepInEx/plugins/AnalogSewing/; since 1.1.0 the plugin is BepInEx/plugins/AnalogSewing.dll.
+        // BepInEx loads the newest copy, but the old one should go.
+        private void WarnAboutOldCopy()
+        {
+            var old = Path.Combine(Path.Combine(Paths.PluginPath, "AnalogSewing"), "AnalogSewing.dll");
+            if (File.Exists(old) && !string.Equals(Path.GetFullPath(old), Path.GetFullPath(Info.Location), StringComparison.OrdinalIgnoreCase))
+                Log.LogWarning($"An older copy of Analog Sewing is still installed. Delete AnalogSewing.dll and " +
+                    $"wooting_analog_sdk_dist.dll from {Path.GetDirectoryName(old)}");
+        }
 
         private void BindConfig()
         {
@@ -51,12 +69,12 @@ namespace AnalogSewing
             FullSpeedDepthMm = Config.Bind("Sewing", "FullSpeedDepthMm", 3.6f,
                 new ConfigDescription("How far (mm) the key must be pressed to reach maximum speed.",
                     new AcceptableValueRange<float>(0.2f, 4.0f)));
-            MinSpeedPercent = Config.Bind("Sewing", "MinSpeedPercent", 5,
+            MinSpeedPercent = Config.Bind("Sewing", "MinSpeedPercent", 5f,
                 new ConfigDescription("Machine speed (% of the game's maximum) at the start depth.",
-                    new AcceptableValueRange<int>(0, 100)));
-            MaxSpeedPercent = Config.Bind("Sewing", "MaxSpeedPercent", 100,
+                    new AcceptableValueRange<float>(0f, 100f)));
+            MaxSpeedPercent = Config.Bind("Sewing", "MaxSpeedPercent", 100f,
                 new ConfigDescription("Machine speed (% of the game's maximum) at the full-speed depth.",
-                    new AcceptableValueRange<int>(1, 100)));
+                    new AcceptableValueRange<float>(1f, 100f)));
             Curve = Config.Bind("Sewing", "Curve", 1.5f,
                 new ConfigDescription("Response curve between the two depths. 1 = linear, higher = finer control at low speed, " +
                     "lower = reaches high speed sooner.",

@@ -5,6 +5,7 @@
 
 Fonts (Fraunces, Nunito) load from Google Fonts at render time.
 """
+import math
 import pathlib
 import subprocess
 import tempfile
@@ -189,8 +190,26 @@ def curve():
     return svg(w, h, body)
 
 
+def icon():
+    """Square mod icon: a half-pressed key under a speed gauge. No text, so it still reads at thumbnail size."""
+    w = h = 512
+    cx, cy, r = 256, 304, 212  # gauge: a semicircle over the key
+    fill = 0.62
+    a = math.pi * (1 - fill)
+    ex, ey = cx + r * math.cos(a), cy - r * math.sin(a)
+    s = 1.42  # switch_key is drawn 260 x 190
+    body = f"""
+  <path d="M{cx - r} {cy} A{r} {r} 0 0 1 {cx + r} {cy}" stroke="{CARD}" stroke-width="28" fill="none" stroke-linecap="round"/>
+  <path d="M{cx - r} {cy} A{r} {r} 0 0 1 {ex:.1f} {ey:.1f}" stroke="{TEAL}" stroke-width="28" fill="none" stroke-linecap="round"/>
+  <circle cx="{ex:.1f}" cy="{ey:.1f}" r="21" fill="{CREAM}"/>
+  <g transform="translate({cx} {cy - 131}) scale({s})">{switch_key(0, 0, 18)}</g>
+"""
+    return svg(w, h, body)
+
+
 IMAGES = {
     "header": (header, 1300, 372),
+    "icon": (icon, 512, 512),
     "1-foot-pedal": (pedal, 1920, 1080),
     "2-tune-the-feel": (curve, 1920, 1080),
 }

@@ -1,11 +1,10 @@
 using System;
-using System.IO;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace AnalogSewing
 {
-    // Current depth of the sew key, read from the bundled Wooting Analog SDK.
+    // Current depth of the sew key (the deepest, if there are two), read from the bundled Wooting Analog SDK.
     internal static class AnalogInput
     {
         private const string Dll = "wooting_analog_sdk_dist";
@@ -32,8 +31,8 @@ namespace AnalogSewing
         {
             try
             {
-                // Load the bundled DLL by full path so P/Invoke finds it next to this plugin.
-                var path = Path.Combine(Path.GetDirectoryName(typeof(Plugin).Assembly.Location), Dll + ".dll");
+                // Load the SDK by full path; P/Invoke then binds to the already-loaded module by name.
+                var path = Embedded.Unpack(Dll + ".dll");
                 if (LoadLibraryW(path) == IntPtr.Zero)
                 {
                     Plugin.Log.LogWarning($"Could not load {path} (error {Marshal.GetLastWin32Error()}); analog sewing disabled");
@@ -75,15 +74,15 @@ namespace AnalogSewing
         {
             _live = false;
             _depth01 = 0f;
-            if (_ready)
+            var keys = SewKeys.Analog;
+            if (!_ready || keys.Length == 0) return;
+
+            foreach (var code in keys)
             {
-                HidKeys.TryParse(Plugin.SewKey.Value, out var code);
                 var v = wooting_analog_read_analog(code);
-                if (v >= 0f)
-                {
-                    _live = true;
-                    _depth01 = Mathf.Clamp01(v);
-                }
+                if (v < 0f) continue;
+                _live = true;
+                _depth01 = Mathf.Max(_depth01, Mathf.Clamp01(v));
             }
 
             if (_live != _loggedLive)

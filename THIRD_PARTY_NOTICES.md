@@ -2,7 +2,7 @@
 
 ## Wooting Analog SDK
 
-`wooting_analog_sdk_dist.dll` is the unmodified redistributable from the
+`AnalogSewing.dll` embeds `wooting_analog_sdk_dist.dll`, the unmodified redistributable from the
 [Wooting Analog SDK](https://github.com/WootingKb/wooting-analog-sdk) v0.9.1,
 by Wooting, licensed under the
 [Mozilla Public License 2.0](https://www.mozilla.org/en-US/MPL/2.0/).

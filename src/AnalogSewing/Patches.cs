@@ -58,8 +58,9 @@ namespace AnalogSewing
                 _frame = Time.frameCount;
                 var start = Plugin.StartDepthMm.Value;
                 // The SDK sees the keyboard even when another window has focus (e.g. typing in Discord
-                // after alt-tab), unlike the game's own input, so ignore the key while unfocused.
-                if (!live || !Application.isFocused) _holding = false;
+                // after alt-tab), unlike the game's own input, so ignore the key while unfocused, and while
+                // the Mod Loader has the keyboard (typing in a text field, or its debug console).
+                if (!live || !Application.isFocused || ModLoader.BlocksInput) _holding = false;
                 else if (!_holding && depthMm >= start) _holding = true;
                 else if (_holding && depthMm < Mathf.Max(0.05f, start - ReleaseHysteresisMm)) _holding = false;
             }
@@ -79,14 +80,13 @@ namespace AnalogSewing
         {
             if (!AnalogInput.TryGetDepthMm(out _)) return;
             var holding = Holding(out _);
-            HidKeys.TryParse(Plugin.SewKey.Value, out var code);
 
-            if (code == HidKeys.Space)
-                // The analog depth replaces Space's digital press, so the keyboard's actuation point
-                // and Rapid Trigger no longer matter. Right mouse still sews as normal.
-                __result = _acceptInput() && (holding || Input.GetMouseButton(1));
-            else
-                __result |= _acceptInput() && holding;
+            // The analog depth replaces the sew key's digital press, so the keyboard's actuation point and
+            // Rapid Trigger no longer matter. The game's other sew inputs still count (right mouse, or
+            // anything else bound to Sew in Yuuma's Dressmaker ModLoader).
+            foreach (var key in SewKeys.GameKeys)
+                if (Input.GetKey(key)) __result = false;
+            __result |= _acceptInput() && holding;
         }
 
         private static bool ComputeFeedSpeedPrefix(SewingController __instance, SewingSpeedControl ___speedControl, ref float __result)

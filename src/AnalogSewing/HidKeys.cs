@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using UnityEngine;
 
 namespace AnalogSewing
 {
@@ -43,6 +44,17 @@ namespace AnalogSewing
                 ushort.TryParse(name.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out code))
                 return true;
             code = Space;
+            return false;
+        }
+
+        /// <summary>Maps a Unity key (e.g. from Mod Loader keybinds) to its HID code; false for mouse buttons and unmapped keys.</summary>
+        public static bool TryFromKeyCode(KeyCode key, out ushort code)
+        {
+            var name = key.ToString();
+            if (name.StartsWith("Alpha")) name = name.Substring(5);                  // Alpha1 -> 1
+            else if (name.EndsWith("Arrow")) name = name.Substring(0, name.Length - 5); // UpArrow -> Up
+            if (key != KeyCode.None && TryParse(name, out code)) return true;
+            code = 0;
             return false;
         }
     }

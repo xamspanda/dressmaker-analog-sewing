@@ -10,20 +10,31 @@ press the sew key lightly to sew slowly, press harder to sew faster.
 A [BepInEx 5](https://github.com/BepInEx/BepInEx) mod for
 [Dressmaker](https://store.steampowered.com/app/4019220/). It reads key depth with
 Wooting's official [Analog SDK](https://github.com/WootingKb/wooting-analog-sdk), which is
-bundled, so there's nothing else to install.
+built in, so there's nothing else to install. Works on its own or with
+[Yuuma's Dressmaker ModLoader](https://www.nexusmods.com/dressmaker/mods/1).
 
 ## Install
+
+**With Yuuma's Dressmaker ModLoader:** in the game, open Options > Mod Manager > Install/Update
+Mod, choose `AnalogSewing-<version>.zip`, and restart Dressmaker.
+
+**Without it:**
 
 1. Install **BepInEx 5 (x64)** into the Dressmaker folder (the one containing `Dressmaker.exe`):
    extract [BepInEx_win_x64_5.4.23.5.zip](https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5)
    there.
 2. Extract `AnalogSewing-<version>.zip` into the same folder, so you end up with
-   `BepInEx/plugins/AnalogSewing/AnalogSewing.dll`.
+   `BepInEx/plugins/AnalogSewing.dll`.
 3. **Linux / Steam Deck (Proton) only:** set the game's Steam launch options to
    `WINEDLLOVERRIDES="winhttp=n,b" %command%` so BepInEx loads.
 
 Launch the game and sew with Space. `BepInEx/LogOutput.log` should say
 `Reading key depth from the Wooting Analog SDK`.
+
+**Updating from 1.0.0:** 1.0.0 installed into a folder; since 1.1.0 the mod is the single file
+`BepInEx/plugins/AnalogSewing.dll`. After installing the new version either way, delete
+`AnalogSewing.dll` and `wooting_analog_sdk_dist.dll` from `BepInEx/plugins/AnalogSewing/`. (The
+newer version loads anyway, and the log reminds you while the old files are there.)
 
 ## How it works
 
@@ -36,9 +47,9 @@ Launch the game and sew with Space. `BepInEx/LogOutput.log` should say
 
 ## Configuration
 
-Edit `BepInEx/config/xamspanda.dressmaker.analogsewing.cfg` (created on first launch), or
-change settings in-game with
-[BepInEx.ConfigurationManager](https://github.com/BepInEx/BepInEx.ConfigurationManager) (F1).
+Change settings in-game in the ModLoader's Mod Settings window (Analog Sewing tab) or with
+[BepInEx.ConfigurationManager](https://github.com/BepInEx/BepInEx.ConfigurationManager) (F1), or
+edit `BepInEx/config/xamspanda.dressmaker.analogsewing.cfg` (created on first launch).
 
 | Setting | Default | What it does |
 |---|---|---|
@@ -47,12 +58,22 @@ change settings in-game with
 | `Sewing.MinSpeedPercent` | 5 | Speed at the start depth, as % of the game's maximum |
 | `Sewing.MaxSpeedPercent` | 100 | Speed at the full-speed depth |
 | `Sewing.Curve` | 1.5 | 1 = linear; higher = finer control at low speed |
-| `Input.SewKey` | Space | Analog key to sew with (`Space`, `F`, `LeftShift`, `0x2C`, ...) |
+| `Input.SewKey` | Space | Analog key to sew with (`Space`, `F`, `LeftShift`, `0x2C`, ...); not used with the ModLoader |
 | `Advanced.KeyTravelMm` | 4.0 | Your switches' total travel |
 | `Display.MoveSpeedSlider` | true | Move the in-game speed slider to show the current speed |
 
 If you pick a `SewKey` other than Space, Space keeps working as a normal sew key at the
 slider's speed.
+
+## With Yuuma's Dressmaker ModLoader
+
+- The analog key is whatever keyboard key you bind to **Sew** in Mod Settings > Keybinds
+  (Space by default); rebinding takes effect immediately. Mouse buttons bound to Sew sew at the
+  slider's speed. If no keyboard key is bound, analog sewing is off.
+- Settings are in Mod Settings > Analog Sewing.
+- The analog key doesn't sew while you're typing in a text field, setting a keybind, or using
+  the loader's debug console.
+- The Mod Manager shows the mod's icon, author and credits.
 
 ## Troubleshooting
 
@@ -72,7 +93,10 @@ assemblies can't be redistributed, so the build references your copy).
     scripts/install-dev.sh                       # build, package, and install into the game
     scripts/package.sh                           # just build release zips into dist/
 
-`package.sh` downloads the pinned Wooting SDK release and verifies its checksum.
+`package.sh` downloads the pinned Wooting SDK release, verifies its checksum, and embeds it in
+`AnalogSewing.dll` (unpacked to `BepInEx/cache/AnalogSewing/` at runtime), so the release is a
+single DLL. Build with these scripts rather than `dotnet build` alone, which can't fetch the SDK.
+Page images and the icon come from `docs/media/make_media.py`.
 
 ## Credits
 

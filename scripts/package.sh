@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Build the release zip dist/AnalogSewing-<version>.zip (extract into the game folder; needs BepInEx 5).
+# Build the release zip dist/AnalogSewing-<version>.zip (extract into the game folder, or install through
+# Yuuma's Dressmaker ModLoader's Mod Manager; needs BepInEx 5).
 # Needs a Dressmaker install with BepInEx to compile against (see DRESSMAKER_DIR in the csproj).
 set -euo pipefail
 
@@ -21,14 +22,21 @@ if [[ ! -f "$CACHE/$SDK_ZIP" ]]; then
 fi
 echo "$SDK_SHA256  $CACHE/$SDK_ZIP" | sha256sum -c --quiet
 
+# The SDK is embedded in AnalogSewing.dll (see the csproj).
+mkdir -p "$ROOT/build/sdk"
+bsdtar -xOf "$CACHE/$SDK_ZIP" release/wooting_analog_sdk_dist.dll > "$ROOT/build/sdk/wooting_analog_sdk_dist.dll"
+
 dotnet build "$ROOT/src/AnalogSewing" -c Release -nologo -v quiet
 
-PLUGIN="$STAGE/mod/BepInEx/plugins/AnalogSewing"
-mkdir -p "$PLUGIN"
-cp "$ROOT/src/AnalogSewing/bin/Release/net472/AnalogSewing.dll" "$PLUGIN/"
-bsdtar -xOf "$CACHE/$SDK_ZIP" release/wooting_analog_sdk_dist.dll > "$PLUGIN/wooting_analog_sdk_dist.dll"
-cp "$ROOT/LICENSE" "$PLUGIN/LICENSE.txt"
-cp "$ROOT/THIRD_PARTY_NOTICES.md" "$PLUGIN/THIRD_PARTY_NOTICES.md"
+# A single DLL directly in BepInEx/plugins, where Yuuma's Dressmaker ModLoader also installs it, so the zip
+# can be extracted into the game folder or installed through its Mod Manager. Docs go in a folder beside it
+# (the Mod Manager only accepts README/LICENSE-style names there, and doesn't copy them).
+PLUGINS="$STAGE/mod/BepInEx/plugins"
+mkdir -p "$PLUGINS/AnalogSewing"
+cp "$ROOT/src/AnalogSewing/bin/Release/net472/AnalogSewing.dll" "$PLUGINS/"
+cp "$ROOT/LICENSE" "$PLUGINS/AnalogSewing/LICENSE.txt"
+{ echo "Analog Sewing $VERSION: https://www.nexusmods.com/dressmaker/mods/516"; echo; cat "$ROOT/THIRD_PARTY_NOTICES.md"; } \
+  > "$PLUGINS/AnalogSewing/README.txt"
 
 MOD_ZIP="$ROOT/dist/AnalogSewing-$VERSION.zip"
 rm -f "$MOD_ZIP"
